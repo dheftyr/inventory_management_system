@@ -48,3 +48,4 @@ Thumbs.db # Windows
 # Sensitive files
 .env # Environment variables or secrets
 application.properties # If it contains credentials (consider using environment variables instead)
+/bin/
