@@ -39,6 +39,6 @@ public class Category {
 	@Override
 	public String toString() {
 
-		return "Nome: " + this.name;
+		return this.name;
 	}
 }

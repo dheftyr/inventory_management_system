@@ -102,7 +102,6 @@ public class Product {
 		+ "\nNome: " + this.name
 		+ "\nQuantidade: " + this.quantity
 		+ "\nPreço: " + this.price
-		+ "\nCategoria: " + this.category
 		+ "\nCategoria: " + this.category.toString();
 	}
 }
