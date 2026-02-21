@@ -38,6 +38,14 @@ public class Program {
 					stock.generateReport();
 					
 					break;
+				case 3:
+					System.out.println("--------------------------------------------");
+					System.out.println("-           Adicionar Quantidade           -");
+					System.out.println("--------------------------------------------\n");
+					
+					addQuantity();
+					
+					break;			
 			}
 		}while(op != 0);
 		
@@ -74,5 +82,37 @@ public class Program {
 			Product prod = new Product(id, name, price, quantity, new Category(idCategory, nameCategory));
 			
 			stock.registerProduct(prod);
-		}		
+	}
+	
+	public static void addQuantity() {
+		System.out.println("Qual produto você que adicionar a quantidade?(Selecione pelo código)");
+		
+		stock.generateReport();
+		
+		System.out.print("Seliecione o código: ");
+		int cod = sc.nextInt();
+		sc.nextLine();
+		
+		while(true) {
+			Product result = stock.searchById(cod);
+			if(result == null) {
+				System.out.println("Produto não existe com esse código");
+				
+				System.out.print("Seliecione o código ou 0 para sair: ");
+				cod = sc.nextInt();
+				sc.nextLine();
+				if(cod == 0) {
+					break;
+				}
+			}else {
+				System.out.print("Qual a qauntidade que deseja adicionar: ");
+				int quantity = sc.nextInt();
+				result.addStock(quantity);
+				sc.nextLine();
+				System.out.println("Valor adicionado com sucesso!");
+				break;
+			}
+		}
+		
+	}
 }
