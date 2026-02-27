@@ -8,15 +8,18 @@ public class Product {
 	private String description;
 	private int quantity;
 	
+	private Category category;
+	
 	public Product() {
 	}
 
-	public Product(int id, String name, double price, String description, int quantity) {
+	public Product(int id, String name, double price, String description, int quantity, Category category) {
 		this.id = id;
 		this.name = name;
 		this.price = price;
 		this.description = description;
 		this.quantity = quantity;
+		this.category = category;
 	}
 
 	public int getId() {
@@ -59,13 +62,22 @@ public class Product {
 		this.quantity = quantity;
 	}
 	
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
 	@Override
 	public String toString() {
 		return "Id: " + id
 			 + "\nNome: " + name
 			 + "\nPreço: " + price
 			 + "\nDescrição: " + description
-			 + "\nQuantidade: " + quantity;
+			 + "\nQuantidade: " + quantity
+			 + "\nCategoria: " + category.toString();
 	}
 		
 }
