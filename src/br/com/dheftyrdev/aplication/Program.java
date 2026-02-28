@@ -1,10 +1,12 @@
 package br.com.dheftyrdev.aplication;
 
+import java.util.List;
 import java.util.Scanner;
 
 import br.com.dheftyrdev.entities.Category;
 import br.com.dheftyrdev.entities.Product;
 import br.com.dheftyrdev.entities.Stock;
+import br.com.dheftyrdev.services.FileService;
 
 public class Program {
 
@@ -15,6 +17,14 @@ public class Program {
 		int op = 5;
 		
 		Stock stock = new Stock();
+		FileService fs = new FileService();
+		
+		List<Product> listFromFile = fs.fileReader(); 
+		for (Product p : listFromFile) {
+		    stock.addProduct(p);
+		}
+		
+		
 		
 		do {
 			
@@ -27,26 +37,19 @@ public class Program {
 						System.out.println("|          Cadastro de produtos           |");
 						System.out.println("-------------------------------------------");
 						
-						for(int i = 0; i < 10; i++) {
-							int idAdd = i + 1;
+							int idAdd = stock.getProduct().size() + 1;
 							String nameAdd = readString("Nome: ");
 							double priceAdd = readDouble("Preço: ");
 							String descriptionAdd = readString("Descrição: ");
 							int quantityAdd = readInt("Quantidade: ");
 							String nameCategoriaAdd = readString("Categoria: ");
-							int idCategoryAdd = i + 1;
+							int idCategoryAdd = stock.getProduct().size() + 1;
 							
 							Product prod = new Product(idAdd, nameAdd, priceAdd, descriptionAdd, quantityAdd, new Category(idCategoryAdd, nameCategoriaAdd));
 							
 							stock.addProduct(prod);
 							
-							int continuee = readInt("\nDejesa continuar o cadastro? 1(SIM) ou 0(NÃO): ");
-							
-							if(continuee == 0) {
-								break;
-							}
-						
-						}
+							fs.saveFile(stock.getProduct());
 					
 					break;
 				case 2:
@@ -60,6 +63,8 @@ public class Program {
 						int quantityRemoveStock = readInt("Quantidade que deseja adicionar: ");
 						
 						stock.removeStock(quantityRemoveStock, idRemoveStock);
+						
+						fs.saveFile(stock.getProduct());
 					
 					break;
 				case 3:
@@ -74,6 +79,7 @@ public class Program {
 						
 						stock.addStock(quantityAddStock, idAddStock);
 						
+						fs.saveFile(stock.getProduct());
 						
 					break;
 				case 4: 
