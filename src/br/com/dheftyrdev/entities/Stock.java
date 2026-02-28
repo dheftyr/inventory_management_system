@@ -11,6 +11,10 @@ public class Stock {
 		product = new ArrayList<>();
 	}
 	
+	public List<Product> getProduct() {
+		return product;
+	}
+	
 	public void addProduct(Product product) {
 		this.product.add(product);
 	}
