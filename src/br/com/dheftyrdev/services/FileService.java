@@ -15,11 +15,12 @@ public class FileService {
 	
 	private String path = "data.csv";
 	
-	public void saveFile(List<Product> product) {
+	public void save(List<Product> products) {
 		
 		try(BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
 			
-			for(Product prod : product) {
+			for(Product prod : products) {
+				
 				bw.write(prod.getId() + ";" 
 					   + prod.getName() + ";"
 					   + prod.getPrice() + ";"
@@ -27,46 +28,48 @@ public class FileService {
 					   + prod.getQuantity() + ";"
 					   + prod.getCategory().getId() + ";"
 					   + prod.getCategory().getName());
+				
 				bw.newLine();
 			}
+		}catch(IOException e) {
 			
-		}
-		catch(IOException e) {
-			System.out.println("Erro: " + e.getMessage());
+			System.out.println("Erro ao salvar arquivo: " + e.getMessage());
 		}
 	}
 	
-	public List<Product> fileReader() {
+	public List<Product> load() {
 	 		
-	 		List<Product> list = new ArrayList<>();
+		List<Product> products = new ArrayList<>();
 	 		
-	 		 try(BufferedReader br = new BufferedReader(new FileReader(path))){
+	 		try(BufferedReader br = new BufferedReader(new FileReader(path))){
 	 			 
-	 			 String line = br.readLine();
+	 			String line = br.readLine();
 	 			
 	 			 while(line !=  null) {
-	 				 String vector[] = line.split(";");
 	 				 
-	 				 int idReader = Integer.parseInt(vector[0]);
-	 				 String nameReader = vector[1];
-	 				 double priceReader = Double.parseDouble(vector[2]);
-	 				 String descriptionReader = vector[3];
-	 				 int quantityReader = Integer.parseInt(vector[4]);
-	 				 int idCategoryReader = Integer.parseInt(vector[5]);
-	 				 String nameCategoryReader = vector[6];
+	 				 if(!line.trim().isEmpty()) {
 	 				 
-	 				Product product = new Product(idReader, nameReader, priceReader, descriptionReader, quantityReader, new Category(idCategoryReader, nameCategoryReader));
-	 				list.add(product);
-	 				 
+		 				 String fields[] = line.split(";");
+		 				 
+		 				 int id = Integer.parseInt(fields[0]);
+		 				 String name = fields[1];
+		 				 double price = Double.parseDouble(fields[2]);
+		 				 String description = fields[3];
+		 				 int quantity = Integer.parseInt(fields[4]);
+		 				 int categoryId = Integer.parseInt(fields[5]);
+		 				 String categoryName = fields[6];
+		 				 
+		 				Product product = new Product(id, name, price, description, quantity, new Category(categoryId, categoryName));
+		 				products.add(product);
+	 				 }
+		 				
 	 				line = br.readLine();
-	 				 
 	 			 }
-	 		 }
-	 		 catch(IOException e) {
-	 			System.out.println("Erro: " + e.getMessage());
+	 		 }catch(IOException e) {
+	 			 
+	 			System.out.println("Erro ao ler arquivo: " + e.getMessage());
 	 		 }
 	 		 
-	 		return list;
-	 	}
-	
+	 		return products;
+	}
 }
