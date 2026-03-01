@@ -19,7 +19,7 @@ public class Program {
 		Stock stock = new Stock();
 		FileService fs = new FileService();
 		
-		List<Product> listFromFile = fs.fileReader(); 
+		List<Product> listFromFile = fs.load(); 
 		for (Product p : listFromFile) {
 		    stock.addProduct(p);
 		}
@@ -49,7 +49,7 @@ public class Program {
 							
 							stock.addProduct(prod);
 							
-							fs.saveFile(stock.getProduct());
+							fs.save(stock.getProduct());
 					
 					break;
 				case 2:
@@ -64,7 +64,7 @@ public class Program {
 						
 						stock.removeStock(quantityRemoveStock, idRemoveStock);
 						
-						fs.saveFile(stock.getProduct());
+						fs.save(stock.getProduct());
 					
 					break;
 				case 3:
@@ -79,7 +79,7 @@ public class Program {
 						
 						stock.addStock(quantityAddStock, idAddStock);
 						
-						fs.saveFile(stock.getProduct());
+						fs.save(stock.getProduct());
 						
 					break;
 				case 4: 
